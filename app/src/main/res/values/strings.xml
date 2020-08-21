@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Aspose Barcode Cloud</string>
+    <string name="barcode">Barcode</string>
+    <string name="barcode_type">Barcode type to generate</string>
+    <string name="default_barcode_text">Barcode text</string>
+    <string name="action_generate_barcode">Generate</string>
+    <string name="action_take_photo">Take a photo</string>
+    <string name="action_recognize_barcode_from_file">Recognize from file</string>
+    <string name="barcode_text_hint">Enter Barcode Text</string>
 </resources>
