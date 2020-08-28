@@ -267,7 +267,12 @@ class MainActivity : AppCompatActivity() {
                 } catch (e: ApiException) {
                     runOnUiThread {
                         stopRecognizeAnimation()
-                        showErrorMessage(e.message + ": " + e.details)
+
+                        var message = e.message + ": " + e.details
+                        if (e.code == 0) {
+                            message = "Check AppSid and AppKey in ApiClient $message"
+                        }
+                        showErrorMessage(message)
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
@@ -338,9 +343,11 @@ class MainActivity : AppCompatActivity() {
 
             } catch (e: ApiException) {
                 runOnUiThread {
-                    showErrorMessage(
-                        e.details
-                    )
+                    var message = e.message + ": " + e.details
+                    if (e.code == 0) {
+                        message = "Check AppSid and AppKey in ApiClient $message"
+                    }
+                    showErrorMessage(message)
                 }
             } catch (e: Exception) {
                 runOnUiThread {
