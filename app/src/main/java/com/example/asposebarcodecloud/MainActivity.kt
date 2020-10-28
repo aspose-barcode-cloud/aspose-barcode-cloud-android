@@ -249,6 +249,7 @@ class MainActivity : AppCompatActivity() {
                         null,
                         null,
                         null,
+                        null,
                         tmpFile
                     )
 
@@ -319,6 +320,7 @@ class MainActivity : AppCompatActivity() {
                     null,
                     barcodeImgView.measuredHeight.toDouble(),
                     barcodeImgView.measuredWidth.toDouble(),
+                    null,
                     null,
                     null,
                     null,
