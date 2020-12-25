@@ -318,6 +318,7 @@ class MainActivity : AppCompatActivity() {
                     null,
                     null,
                     null,
+                    null,
                     barcodeImgView.measuredHeight.toDouble(),
                     barcodeImgView.measuredWidth.toDouble(),
                     null,
