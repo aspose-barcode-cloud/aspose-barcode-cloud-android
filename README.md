@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/api-v3.0-lightgrey)  [![GitHub license](https://img.shields.io/github/license/aspose-barcode-cloud/aspose-barcode-cloud-android)](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android)
 
 # Barcode Processing in the Cloud via REST API
-This [cloud SDK assists you to seamlessly integrate barcode generation](https://products.aspose.cloud/barcode/android), processing & conversion functionality into your Android & other Java cloud apps.
+This [cloud SDK assists you to seamlessly integrate barcode generation](https://products.aspose.cloud/barcode/), processing & conversion functionality into your Android & other Java cloud apps.
 Generate new barcodes (Linear, 2D & Postal), configure barcode properties and attributes, such as barcode height, dimensions, image format, and more.
 Scan existing barcodes belonging to 60+ symbologies, including, *Codabar*, *PDF417*, QR, *MicroQR*, *EAN*, *Postnet*, *UPC*, *RM4SCC* and many more.
 
@@ -38,19 +38,16 @@ PDF417, MacroPDF417, MicroPDF417, CompactPDF417 (Decode only), DataMatrix, Aztec
 ### Postal barcode symbologies:
 Postnet, Planet, USPS OneCode, Australia Post, Deutsche Post Identcode, Deutsche Post Leticode, RM4SCC, SingaporePost, AustralianPosteParcel, SwissPostParcel, UpcaGs1DatabarCoupon.
 
-## Enhancements in Version 20.12
+## New Features & Enhancements Version 20.12
+- Added the Structured Append support to the QR encoder.
+-Added the Kanji encoding to the QR encoder.
 
-- Ability to specify word wraps (line breaks) within text.
-- Set flag of 2D composite component with DataBar barcode.
-- Support to set the option to allow only GS1 encoding standard for Databar barcode type.
-- Various enhanced paramters for the QR structured append mode.
-
-## Enhancements in Version 20.11
+## New Features & Enhancements in Version 20.11
 - Updated and fixed the UI components.
 - Added additional fields to the Databar section.
 - Added the Datamatrix support for Macro 5 and 6.
 
-## Enhancements in Version 20.10
+## New Features & Enhancements in Version 20.10
 - Investigated the addition of NoWrap mode to BarcodeGenerator text fields.
 - Add the encodation scheme selector to the DataMatrix codetext.
 
@@ -76,6 +73,6 @@ All Aspose.BarCode for Cloud SDKs, helper scripts and templates are licensed und
 | .NET | Java | PHP | Python| Node.js | Android | Go |
 |---|---|---|---|---|---|---|
 | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-dotnet) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-java) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-php) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-python) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-node) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android) |[GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-go)|
-| [NuGet](https://www.nuget.org/packages/Aspose.barcode-Cloud/) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) | [Composer](https://packagist.org/packages/aspose/barcode-cloud-php) | [PIP](https://pypi.org/project/aspose-barcode-cloud/) | [NPM](https://www.npmjs.com/package/aspose-barcode-cloud) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) |[Go.Dev](https://pkg.go.dev/github.com/aspose-barcode-cloud/aspose-barcode-cloud-go/) |
+| [NuGet](https://www.nuget.org/packages/Aspose.barcode-Cloud/) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) | [Composer](https://packagist.org/packages/aspose/barcode-cloud-php) | [PIP](https://pypi.org/project/aspose-barcode-cloud/) | [NPM](https://www.npmjs.com/package/aspose-barcode-cloud-node) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) |[Go.Dev](https://pkg.go.dev/github.com/aspose-barcode-cloud/aspose-barcode-cloud-go/) |
 
-[Product Page](https://products.aspose.cloud/barcode/android) | [Documentation](https://docs.aspose.cloud/display/barcodecloud/Home) | [API Reference](https://apireference.aspose.cloud/barcode/) | [Code Samples](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android) | [Blog](https://blog.aspose.cloud/category/barcode/) | [Free Support](https://forum.aspose.cloud/c/barcode) | [Free Trial](https://dashboard.aspose.cloud/#/apps)
+[Product Page](https://products.aspose.cloud/barcode/) | [Documentation](https://docs.aspose.cloud/display/barcodecloud/Home) | [API Reference](https://apireference.aspose.cloud/barcode/) | [Code Samples](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android) | [Blog](https://blog.aspose.cloud/category/barcode/) | [Free Support](https://forum.aspose.cloud/c/barcode) | [Free Trial](https://dashboard.aspose.cloud/#/apps)
