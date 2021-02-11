@@ -38,6 +38,10 @@ PDF417, MacroPDF417, MicroPDF417, CompactPDF417 (Decode only), DataMatrix, Aztec
 ### Postal barcode symbologies:
 Postnet, Planet, USPS OneCode, Australia Post, Deutsche Post Identcode, Deutsche Post Leticode, RM4SCC, SingaporePost, AustralianPosteParcel, SwissPostParcel, UpcaGs1DatabarCoupon.
 
+## New Features & Enhancements Version 21.2
+
+- `CheckMore1DVariants` Allows engine to recognize `1D barcodes` with checksum by checking more recognition variants. Default value: `False`
+
 ## New Features & Enhancements Version 20.12
 - Added the Structured Append support to the QR encoder.
 -Added the Kanji encoding to the QR encoder.
