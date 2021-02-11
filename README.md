@@ -63,6 +63,20 @@ To use Aspose Barcode Cloud for Android you need to register an account with [As
 * Go to file *app/src/main/java/com/example/asposebarcodecloud/MainActivity.kt* and set *clientId* and *clientSecret* to apropriate values from <https://dashboard.aspose.cloud/applications>
 
 * Build project and run application on connected device or emulator.
+## Generate Code128 BbarCode in Android using Java
+
+```java
+	// Get your ClientId and ClientSecret from https://dashboard.aspose.cloud (free registration required).
+	ApiClient client = new ApiClient("MY_CLIENT_ID", "MY_CLIENT_SECRET");
+        
+	BarcodeApi api = new BarcodeApi(client);
+
+	String type = "code128";
+	String text = "text example";
+
+	File result = api.getBarcodeGenerate(type, text);
+	System.out.println(result);
+```
 
 ## Licensing
 
