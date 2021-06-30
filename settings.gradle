@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Aspose Barcode Cloud Android"
+rootProject.name = "Android Application for Barcode Processing in the Cloud via REST API"
