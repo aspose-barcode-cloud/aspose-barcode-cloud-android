@@ -1,10 +1,11 @@
-![](https://img.shields.io/badge/api-v3.0-lightgrey)  [![GitHub license](https://img.shields.io/github/license/aspose-barcode-cloud/aspose-barcode-cloud-android)](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android)
+# Android Application for Barcode Processing in the Cloud via REST API
 
-# Barcode Processing in the Cloud via REST API
+![API version: 3.0](https://img.shields.io/badge/api-v3.0-lightgrey)
+[![GitHub license](https://img.shields.io/github/license/aspose-barcode-cloud/aspose-barcode-cloud-android)](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android)
+
 This [cloud SDK assists you to seamlessly integrate barcode generation](https://products.aspose.cloud/barcode/), processing & conversion functionality into your Android & other Java cloud apps.
 Generate new barcodes (Linear, 2D & Postal), configure barcode properties and attributes, such as barcode height, dimensions, image format, and more.
 Scan existing barcodes belonging to 60+ symbologies, including, *Codabar*, *PDF417*, QR, *MicroQR*, *EAN*, *Postnet*, *UPC*, *RM4SCC* and many more.
-
 
 ## BarCode Processing Features
 
@@ -20,22 +21,26 @@ Scan existing barcodes belonging to 60+ symbologies, including, *Codabar*, *PDF4
 - Recognize the specified number of barcodes.
 - Apply image processing algorithms to read barcodes.
 
-
 ## Read & Write PDF Formats
+
 JPEG, TIFF, PNG, BMP, GIF
 
 ## Save BarCode As
-EMF, SVG
+
+JPEG, TIFF, PNG, BMP, GIF, EMF, SVG
 
 ## Supported Barcode Symbologies
 
 ### Linear barcode symbologies:
+
 EAN13, EAN8, UPCA, UPCE, Interleaved2of5, Standard2of5, MSI, Code11, Codabar, EAN14(SCC14), SSCC18, ITF14, Matrix 2 of 5, PZN, Code128, Code39 Extended, Code39 Standard, Code93 Extended, Code16K, Code93 Standard, IATA 2 of 5, OPC, GS1Code128, ISBN, ISMN, ISSN, ITF6, VIN, Pharmacode, DatabarOmniDirectional, DatabarTruncated, DatabarLimited, DatabarExpanded, DatabarStackedOmniDirectional, DatabarExpandedStacked, DatabarStacked, PatchCode, Supplement (Decode only).
 
 ### 2D barcode symbologies:
+
 PDF417, MacroPDF417, MicroPDF417, CompactPDF417 (Decode only), DataMatrix, Aztec, QR, MicroQR, DotCode, MaxiCode, Italian Post 25, GS1DataMatrix, Code16K.
 
 ### Postal barcode symbologies:
+
 Postnet, Planet, USPS OneCode, Australia Post, Deutsche Post Identcode, Deutsche Post Leticode, RM4SCC, SingaporePost, AustralianPosteParcel, SwissPostParcel, UpcaGs1DatabarCoupon.
 
 ## New Features & Enhancements Version 21.2
@@ -43,18 +48,20 @@ Postnet, Planet, USPS OneCode, Australia Post, Deutsche Post Identcode, Deutsche
 - `CheckMore1DVariants` Allows engine to recognize `1D barcodes` with checksum by checking more recognition variants. Default value: `False`
 
 ## New Features & Enhancements Version 20.12
+
 - Added the Structured Append support to the QR encoder.
 -Added the Kanji encoding to the QR encoder.
 
 ## New Features & Enhancements in Version 20.11
+
 - Updated and fixed the UI components.
 - Added additional fields to the Databar section.
 - Added the Datamatrix support for Macro 5 and 6.
 
 ## New Features & Enhancements in Version 20.10
+
 - Investigated the addition of NoWrap mode to BarcodeGenerator text fields.
 - Add the encodation scheme selector to the DataMatrix codetext.
-
 
 ## Prerequisites
 
@@ -62,24 +69,25 @@ To use Aspose Barcode Cloud for Android you need to register an account with [As
 
 ## Getting Started
 
-* Open project in Android Studio
+- Open project in Android Studio
 
-* Go to file *app/src/main/java/com/example/asposebarcodecloud/MainActivity.kt* and set *clientId* and *clientSecret* to apropriate values from <https://dashboard.aspose.cloud/applications>
+- Go to file *app/src/main/java/com/example/asposebarcodecloud/MainActivity.kt* and set *clientId* and *clientSecret* to apropriate values from <https://dashboard.aspose.cloud/applications>
 
-* Build project and run application on connected device or emulator.
+- Build project and run application on connected device or emulator.
+
 ## Generate Code128 BbarCode in Android using Java
 
 ```java
-	// Get your ClientId and ClientSecret from https://dashboard.aspose.cloud (free registration required).
-	ApiClient client = new ApiClient("MY_CLIENT_ID", "MY_CLIENT_SECRET");
-        
-	BarcodeApi api = new BarcodeApi(client);
+    // Get your ClientId and ClientSecret from https://dashboard.aspose.cloud (free registration required).
+    ApiClient client = new ApiClient("MY_CLIENT_ID", "MY_CLIENT_SECRET");
 
-	String type = "code128";
-	String text = "text example";
+    BarcodeApi api = new BarcodeApi(client);
 
-	File result = api.getBarcodeGenerate(type, text);
-	System.out.println(result);
+    String type = "code128";
+    String text = "text example";
+
+    File result = api.getBarcodeGenerate(type, text);
+    System.out.println(result);
 ```
 
 ## Licensing
@@ -89,7 +97,7 @@ All Aspose.BarCode for Cloud SDKs, helper scripts and templates are licensed und
 ## Aspose.Barcode Cloud SDKs in Popular Languages
 
 | .NET | Java | PHP | Python| Node.js | Android | Go |
-|---|---|---|---|---|---|---|
+|------|------|-----|-------|---------|---------|----|
 | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-dotnet) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-java) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-php) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-python) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-node) | [GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android) |[GitHub](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-go)|
 | [NuGet](https://www.nuget.org/packages/Aspose.barcode-Cloud/) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) | [Composer](https://packagist.org/packages/aspose/barcode-cloud-php) | [PIP](https://pypi.org/project/aspose-barcode-cloud/) | [NPM](https://www.npmjs.com/package/aspose-barcode-cloud-node) | [Maven](https://repository.aspose.cloud/webapp/#/artifacts/browse/tree/General/repo/com/aspose/aspose-barcode-cloud) |[Go.Dev](https://pkg.go.dev/github.com/aspose-barcode-cloud/aspose-barcode-cloud-go/) |
 
