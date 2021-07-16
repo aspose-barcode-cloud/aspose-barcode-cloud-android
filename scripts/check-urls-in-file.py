@@ -13,7 +13,7 @@ BROKEN_URLS = collections.defaultdict(list)
 
 def check_url(url):
     with open(os.devnull, 'w') as devnull:
-        ret_code = subprocess.call(['curl', '-sSf', url], stdout=devnull)
+        ret_code = subprocess.call(['curl', '-sSf', '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0', url], stdout=devnull)
     return ret_code == 0
 
 
