@@ -25,7 +25,7 @@
  * --------------------------------------------------------------------------------
  */
 
-package com.example.asposebarcodecloud
+package com.aspose.barcode.cloud.demo_app
 
 import android.Manifest
 import android.app.Activity
@@ -150,6 +150,7 @@ class MainActivity : AppCompatActivity() {
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CALLBACK_CODE -> {
                 // If request is cancelled, the result arrays are empty.
@@ -178,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
