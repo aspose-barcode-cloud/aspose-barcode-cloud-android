@@ -14,6 +14,6 @@ dependencyResolutionManagement {
 
     }
 }
-rootProject.name = "demo_app"
+rootProject.name = "Android Application for Barcode Processing in the Cloud via REST API"
 include ':app'
 
