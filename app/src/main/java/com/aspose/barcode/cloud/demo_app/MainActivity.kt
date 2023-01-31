@@ -1,7 +1,7 @@
 /*
  * --------------------------------------------------------------------------------
  * <copyright company="Aspose">
- *   Copyright (c) 2022 Aspose.BarCode for Cloud
+ *   Copyright (c) 2023 Aspose.BarCode for Cloud
  * </copyright>
  * <summary>
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,7 +25,7 @@
  * --------------------------------------------------------------------------------
  */
 
-package com.example.asposebarcodecloud
+package com.aspose.barcode.cloud.demo_app
 
 import android.Manifest
 import android.app.Activity
@@ -55,6 +55,7 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.floor
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -150,11 +151,12 @@ class MainActivity : AppCompatActivity() {
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CALLBACK_CODE -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
                     // Permission is granted. Continue the action or workflow
                     // in your app.
@@ -178,6 +180,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -194,14 +197,15 @@ class MainActivity : AppCompatActivity() {
                 if (resultCode == RESULT_OK) {
                     val bmpImage = data?.extras?.get("data") as Bitmap
                     recognizeBarcode(bmpImage)
+        }
                 }
-            }
 
             else -> {
                 showErrorMessage("No file selected")
             }
         }
     }
+
 
     private fun recognizeBarcode(image: Bitmap) {
         try {
@@ -312,8 +316,12 @@ class MainActivity : AppCompatActivity() {
     private fun pickFile() {
         val getContentIntent = Intent(Intent.ACTION_GET_CONTENT)
         getContentIntent.type = "image/*"
-        if (getContentIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(getContentIntent, ACTION_GET_CONTENT_CALLBACK_CODE)
+        getContentIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        try {
+             startActivityForResult(Intent.createChooser(getContentIntent, "Select an Image to Recognize"), ACTION_GET_CONTENT_CALLBACK_CODE)
+        } catch (ex: java.lang.Exception) {
+            showErrorMessage("Unable to start file selector")
         }
+
     }
 }

@@ -1,2 +1,19 @@
-include ':app'
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://releases.aspose.cloud/java/repo/' }
+
+    }
+}
 rootProject.name = "Android Application for Barcode Processing in the Cloud via REST API"
+include ':app'
+
