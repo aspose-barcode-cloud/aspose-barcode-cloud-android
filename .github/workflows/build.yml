@@ -1,0 +1,14 @@
+name: Build Android App
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-badges:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: sparkfabrik/android-build-action@v1.5.0
