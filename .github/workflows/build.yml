@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: sparkfabrik/android-build-action@v1.5.0
         with:
-          project-path: ${{ GITHUB_WORKSPACE }}
+          project-path: ${{ github.workspace }}
