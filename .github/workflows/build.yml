@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  check-badges:
+  build-android:
     runs-on: ubuntu-latest
 
     steps:
