@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity() {
                         stopRecognizeAnimation()
 
                         var message = e.message + ": " + e.details
-                        if (e.code == 0) {
+                        if (e.httpCode == 0) {
                             message = "Check ClientId and ClientSecret in ApiClient $message"
                         }
                         showErrorMessage(message)
@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 runOnUiThread {
                     var message = e.message + ": " + e.details
-                    if (e.code == 0) {
+                    if (e.httpCode == 0) {
                         message = "Check ClientId and ClientSecret in ApiClient $message"
                     }
                     showErrorMessage(message)
