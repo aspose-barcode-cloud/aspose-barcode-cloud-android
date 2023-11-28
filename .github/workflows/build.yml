@@ -12,6 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Java 17 for AGP
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
 
       - uses: sparkfabrik/android-build-action@v1.5.0
         with:
