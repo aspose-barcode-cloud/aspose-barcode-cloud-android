@@ -23,5 +23,5 @@ jobs:
         with:
           project-path: ${{ github.workspace }}
           fastlane-env: "release"
-          ruby-version: "2.7.5"
-          bundler-version: "2.3.26"
+          ruby-version: "3.3"
+          bundler-version: "2.4.22"
