@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity() {
         val type: EncodeBarcodeType = EncodeBarcodeType.fromValue(barcodeTypeSpinner.selectedItem.toString())
 
        val genRequest = BarcodeGenerateBarcodeTypeGetRequest(
-                        type, EncodeDataType.STRING_DATA, barcodeTextEdit.text.toString());
+                        type, barcodeTextEdit.text.toString());
 
         genRequest.imageFormat = AvailableBarCodeImageFormat.PNG;
         genRequest.imageHeight = barcodeImgView.measuredHeight.toDouble()
