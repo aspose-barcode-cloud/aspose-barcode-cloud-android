@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity() {
             "Client Secret from https://dashboard.aspose.cloud/applications"
         )
 
-        client.writeTimeout = 60_000
         client.readTimeout = 60_000
 
         api = BarcodeApi(client)
