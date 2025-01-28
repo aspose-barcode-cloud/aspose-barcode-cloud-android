@@ -1,7 +1,7 @@
 # Android Application for Barcode Processing in the Cloud via REST API
 
 [![Build Android App](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android/actions/workflows/build.yml)
-![API version: 3.0](https://img.shields.io/badge/api-v3.0-lightgrey)
+![API version: 4.0](https://img.shields.io/badge/api-v4.0-lightgrey)
 [![GitHub license](https://img.shields.io/github/license/aspose-barcode-cloud/aspose-barcode-cloud-android)](https://github.com/aspose-barcode-cloud/aspose-barcode-cloud-android)
 
 This [cloud SDK assists you to seamlessly integrate barcode generation](https://products.aspose.cloud/barcode/), processing & conversion functionality into your Android & other Java cloud apps.
