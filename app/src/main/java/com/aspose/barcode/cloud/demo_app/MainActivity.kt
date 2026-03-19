@@ -27,12 +27,11 @@
 
 package com.aspose.barcode.cloud.demo_app
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Size
@@ -42,16 +41,18 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.aspose.barcode.cloud.ApiClient
 import com.aspose.barcode.cloud.ApiException
 import com.aspose.barcode.cloud.api.GenerateApi
 import com.aspose.barcode.cloud.api.ScanApi
 import com.aspose.barcode.cloud.model.BarcodeImageFormat
-import com.aspose.barcode.cloud.model.BarcodeResponseList
 import com.aspose.barcode.cloud.model.EncodeBarcodeType
-import com.aspose.barcode.cloud.model.EncodeDataType
 import com.aspose.barcode.cloud.requests.GenerateRequestWrapper
 import com.aspose.barcode.cloud.requests.ScanMultipartRequestWrapper
 import com.google.android.material.snackbar.Snackbar
@@ -59,30 +60,22 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.floor
 
-
 class MainActivity : AppCompatActivity() {
     companion object {
-        const val PERMISSION_REQUEST_CALLBACK_CODE = 1
-        const val ACTION_GET_CONTENT_CALLBACK_CODE = 2
         const val ACTION_IMAGE_CAPTURE_CALLBACK_CODE = 3
 
         private fun imageSize(width: Int, height: Int, maxSize: Int = 384): Size {
             val ratio = width.toFloat() / height
             if (ratio > 1) {
-                // width > height
-                // use width
                 if (width < maxSize) {
-                    // do not resize
                     return Size(width, height)
                 }
 
                 val newHeight = floor(maxSize / ratio).toInt()
                 return Size(maxSize, newHeight)
             }
-            // width <= height
-            // use height
+
             if (height < maxSize) {
-                // do not resize
                 return Size(width, height)
             }
             val newWidth = floor(maxSize * ratio).toInt()
@@ -103,9 +96,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var generateApi: GenerateApi
     private val encodeTypes = EncodeBarcodeType.values().map { it.toString() }.sorted()
 
+    private val photoPickerLauncher =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri == null) {
+                return@registerForActivityResult
+            }
+
+            recognizeSelectedImage(uri)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        configureEdgeToEdge()
 
         val client = ApiClient(
             "Client Id from https://dashboard.aspose.cloud/applications",
@@ -124,6 +127,18 @@ class MainActivity : AppCompatActivity() {
         barcodeImgView = findViewById(R.id.imageView)
     }
 
+    private fun configureEdgeToEdge() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val rootLayout = findViewById<View>(R.id.rootLayout)
+        ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+            windowInsets
+        }
+        ViewCompat.requestApplyInsets(rootLayout)
+    }
+
     private fun showErrorMessage(error: String) {
         Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show()
     }
@@ -135,81 +150,38 @@ class MainActivity : AppCompatActivity() {
         barcodeTypeSpinner.setSelection(encodeTypes.indexOf("QR"))
     }
 
-    private fun requestPermissionAndPickFile(context: Activity) {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            pickFile()
-        } else {
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                PERMISSION_REQUEST_CALLBACK_CODE
-            )
-        }
-    }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CALLBACK_CODE -> {
-                // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                ) {
-                    // Permission is granted. Continue the action or workflow
-                    // in your app.
-                    pickFile()
-                } else {
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
-                    showErrorMessage("Permission to read image denied")
-                }
-                return
-            }
-
-            // Add other 'when' lines to check for other
-            // permissions this app might request.
-            else -> {
-                // Ignore all other requests.
-            }
-        }
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when (requestCode) {
-            ACTION_GET_CONTENT_CALLBACK_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val bytes = contentResolver.openInputStream(data?.data!!)!!.readBytes()
-                    val bmpImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    recognizeBarcode(bmpImage)
-                }
+        if (requestCode == ACTION_IMAGE_CAPTURE_CALLBACK_CODE && resultCode == Activity.RESULT_OK) {
+            val bmpImage = data?.extras?.get("data") as? Bitmap
+            if (bmpImage == null) {
+                showErrorMessage("No photo captured")
+                return
             }
-
-            ACTION_IMAGE_CAPTURE_CALLBACK_CODE -> {
-                if (resultCode == RESULT_OK) {
-                    val bmpImage = data?.extras?.get("data") as Bitmap
-                    recognizeBarcode(bmpImage)
-                }
-            }
-
-            else -> {
-                showErrorMessage("No file selected")
-            }
+            recognizeBarcode(bmpImage)
         }
     }
 
+    private fun recognizeSelectedImage(uri: Uri) {
+        try {
+            val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
+            if (bytes == null) {
+                showErrorMessage("Unable to read selected image")
+                return
+            }
+
+            val bmpImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            if (bmpImage == null) {
+                showErrorMessage("Unable to decode selected image")
+                return
+            }
+
+            recognizeBarcode(bmpImage)
+        } catch (e: Exception) {
+            showErrorMessage("Unable to read selected image")
+        }
+    }
 
     private fun recognizeBarcode(image: Bitmap) {
         try {
@@ -224,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                 smallerBmp.compress(Bitmap.CompressFormat.PNG, 100, output)
             }
 
-            val apiRequest = ScanMultipartRequestWrapper(tmpFile);
+            val apiRequest = ScanMultipartRequestWrapper(tmpFile)
 
             Thread {
                 try {
@@ -259,9 +231,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }.start()
-
-        } catch (e: java.lang.Exception) {
-            showErrorMessage(e.message!!)
+        } catch (e: Exception) {
+            showErrorMessage(e.message ?: "Unknown error")
         }
     }
 
@@ -276,25 +247,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onBtnGenerateClick(@Suppress("UNUSED_PARAMETER") view: View) {
+        val type = EncodeBarcodeType.fromValue(barcodeTypeSpinner.selectedItem.toString())
 
-        val type: EncodeBarcodeType = EncodeBarcodeType.fromValue(barcodeTypeSpinner.selectedItem.toString())
-
-       val genRequest = GenerateRequestWrapper(
-                        type, barcodeTextEdit.text.toString());
-
-        genRequest.imageFormat = BarcodeImageFormat.PNG;
+        val genRequest = GenerateRequestWrapper(type, barcodeTextEdit.text.toString())
+        genRequest.imageFormat = BarcodeImageFormat.PNG
         genRequest.imageHeight = barcodeImgView.measuredHeight.toFloat()
         genRequest.imageWidth = barcodeImgView.measuredWidth.toFloat()
 
-
         Thread {
             try {
-                val generated: File? = generateApi.generate(genRequest);
+                val generated = generateApi.generate(genRequest)
                 runOnUiThread {
                     val bitmap = BitmapFactory.decodeFile(generated!!.absolutePath)
                     barcodeImgView.setImageBitmap(bitmap)
                 }
-
             } catch (e: ApiException) {
                 runOnUiThread {
                     var message = e.message + ": " + e.details
@@ -319,21 +285,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onBtnSelectImageClick(@Suppress("UNUSED_PARAMETER") view: View) {
-        requestPermissionAndPickFile(this)
-    }
-
-    private fun pickFile() {
-        val getContentIntent = Intent(Intent.ACTION_GET_CONTENT)
-        getContentIntent.type = "image/*"
-        getContentIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        try {
-            startActivityForResult(
-                Intent.createChooser(getContentIntent, "Select an Image to Recognize"),
-                ACTION_GET_CONTENT_CALLBACK_CODE
-            )
-        } catch (ex: java.lang.Exception) {
-            showErrorMessage("Unable to start file selector")
-        }
-
+        photoPickerLauncher.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
     }
 }
