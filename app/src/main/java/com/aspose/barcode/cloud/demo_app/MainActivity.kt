@@ -44,6 +44,7 @@ import android.widget.Spinner
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.BundleCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -59,11 +60,10 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.floor
+import androidx.core.graphics.scale
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        const val ACTION_IMAGE_CAPTURE_CALLBACK_CODE = 3
-
         private fun imageSize(width: Int, height: Int, maxSize: Int = 384): Size {
             val ratio = width.toFloat() / height
             if (ratio > 1) {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         private fun reduceBitmapSize(image: Bitmap): Bitmap {
             val newSize = imageSize(image.width, image.height)
-            return Bitmap.createScaledBitmap(image, newSize.width, newSize.height, true)
+            return image.scale(newSize.width, newSize.height)
         }
     }
 
@@ -94,7 +94,21 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var scanApi: ScanApi
     private lateinit var generateApi: GenerateApi
-    private val encodeTypes = EncodeBarcodeType.values().map { it.toString() }.sorted()
+    private val encodeTypes = EncodeBarcodeType.entries.map { it.toString() }.sorted()
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val bmpImage = result.data?.extras?.let {
+                    BundleCompat.getParcelable(it, "data", Bitmap::class.java)
+                }
+                if (bmpImage == null) {
+                    showErrorMessage("No photo captured")
+                    return@registerForActivityResult
+                }
+                recognizeBarcode(bmpImage)
+            }
+        }
 
     private val photoPickerLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -150,19 +164,6 @@ class MainActivity : AppCompatActivity() {
         barcodeTypeSpinner.setSelection(encodeTypes.indexOf("QR"))
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == ACTION_IMAGE_CAPTURE_CALLBACK_CODE && resultCode == Activity.RESULT_OK) {
-            val bmpImage = data?.extras?.get("data") as? Bitmap
-            if (bmpImage == null) {
-                showErrorMessage("No photo captured")
-                return
-            }
-            recognizeBarcode(bmpImage)
-        }
-    }
-
     private fun recognizeSelectedImage(uri: Uri) {
         try {
             val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
@@ -178,7 +179,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             recognizeBarcode(bmpImage)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             showErrorMessage("Unable to read selected image")
         }
     }
@@ -280,7 +281,7 @@ class MainActivity : AppCompatActivity() {
     fun onBtnTakePhotoClick(@Suppress("UNUSED_PARAMETER") view: View) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(takePictureIntent, ACTION_IMAGE_CAPTURE_CALLBACK_CODE)
+            cameraLauncher.launch(takePictureIntent)
         }
     }
 
